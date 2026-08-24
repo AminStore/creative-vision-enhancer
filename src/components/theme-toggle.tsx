@@ -102,7 +102,7 @@ export function ThemeToggle() {
               x2="12"
               y2="4.1"
               style={{
-                transform: `rotate(${angle}deg)`,
+                transform: `rotate(${angle}deg) scale(var(--ray-scale, 1))`,
                 transformOrigin: "12px 12px",
                 transitionDelay: `${i * 22}ms`,
               }}

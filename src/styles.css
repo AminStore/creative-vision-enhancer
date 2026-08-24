@@ -727,9 +727,11 @@
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.55s ease;
 }
+.celestial-toggle[data-mode="dark"] .celestial-rays {
+  --ray-scale: 0.15;
+}
 .celestial-toggle[data-mode="dark"] .celestial-rays line {
   opacity: 0;
-  transform: rotate(var(--ray-angle, 0deg)) scale(0.2) !important;
 }
 
 .celestial-stars circle {
