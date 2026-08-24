@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { ThemeToggle } from "./theme-toggle";
+
 const links = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
@@ -47,13 +49,16 @@ export function SiteNav() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="press sheen inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold tracking-wide text-primary-foreground uppercase"
-        >
-          <span className="blink-dot size-1.5 rounded-full bg-brand-yellow" />
-          Available Q3 2026
-        </a>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <a
+            href="#contact"
+            className="press sheen inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold tracking-wide text-primary-foreground uppercase"
+          >
+            <span className="blink-dot size-1.5 rounded-full bg-brand-yellow" />
+            Available Q3 2026
+          </a>
+        </div>
       </nav>
     </header>
   );
