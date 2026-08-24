@@ -666,57 +666,91 @@
   --shadow-lift: 0 12px 30px -16px oklch(0 0 0 / 0.7);
 }
 
-/* Theme toggle */
-.theme-toggle {
+/* Theme toggle: sun <-> moon celestial morph */
+.celestial-toggle {
   position: relative;
-  overflow: hidden;
   isolation: isolate;
   transition:
-    background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    background-color 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.theme-toggle:hover {
+.celestial-toggle:hover {
   transform: translateY(-1px);
 }
-.theme-toggle:active {
-  transform: scale(0.94);
+.celestial-toggle:active {
+  transform: scale(0.95);
 }
-.theme-toggle .toggle-glow {
+.celestial-halo {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(circle at center, var(--brand-orange), transparent 72%);
+  inset: -2px;
+  border-radius: 999px;
+  background: radial-gradient(circle at center, var(--brand-orange), transparent 70%);
   opacity: 0;
-  transform: scale(0.4);
+  transform: scale(0.5);
   transition:
-    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
-.theme-toggle:hover .toggle-glow {
-  opacity: 0.3;
+.celestial-toggle:hover .celestial-halo {
+  opacity: 0.28;
   transform: scale(1);
 }
-.theme-toggle .toggle-icon {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  will-change: transform, opacity;
-  transition:
-    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.5s ease;
+
+.celestial-svg {
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.theme-toggle .toggle-icon[data-state="hidden"] {
-  opacity: 0;
-  filter: blur(2px);
-  transform: rotate(-90deg) scale(0.55) translateY(8px);
+.celestial-toggle[data-mode="dark"] .celestial-svg {
+  transform: rotate(-190deg);
 }
-.theme-toggle .toggle-icon[data-state="shown"] {
+
+.celestial-body {
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: 12px 12px;
+}
+.celestial-toggle[data-mode="dark"] .celestial-body {
+  transform: scale(1.32);
+}
+
+.celestial-bite {
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.celestial-toggle[data-mode="dark"] .celestial-bite {
+  transform: translate(-9px, 1px);
+}
+
+.celestial-rays line {
+  transform-box: view-box;
   opacity: 1;
-  filter: blur(0);
-  transform: rotate(0deg) scale(1) translateY(0);
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.55s ease;
+}
+.celestial-toggle[data-mode="dark"] .celestial-rays line {
+  opacity: 0;
+  transform: rotate(var(--ray-angle, 0deg)) scale(0.2) !important;
+}
+
+.celestial-stars circle {
+  opacity: 0;
+  transform: scale(0.2);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 0.7s ease,
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.celestial-toggle[data-mode="dark"] .celestial-stars circle {
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celestial-toggle *,
+  .celestial-toggle {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Circular reveal on theme change */
