@@ -110,14 +110,37 @@ html.dark {
   color-scheme: dark;
 }
 
-body,
-.theme-tween,
-.theme-tween * {
+/* Fallback tween (no View Transitions support): only the page shell animates,
+   never every element — that is what made the switch feel heavy. */
+.theme-tween body {
   transition:
-    background-color 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-    color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color 0.32s ease-out,
+    color 0.32s ease-out;
 }
+
+/* View Transitions: the new theme is revealed with a GPU-composited clip-path
+   wipe, so no per-element color tweening is needed. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
 
 @layer base {
   * {
